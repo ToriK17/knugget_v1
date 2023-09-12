@@ -20,10 +20,12 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  idle_timeout: 30
 
 development:
   <<: *default
   database: knugget_v1_development
+  url: <%= ENV['DEV_DATABASE_URL'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +60,7 @@ development:
 test:
   <<: *default
   database: knugget_v1_test
+  url: <%= ENV['TEST_DATABASE_URL'] %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: knugget_v1_production
-  username: knugget_v1
-  password: <%= ENV['KNUGGET_V1_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # username: knugget_v1
+  # password: <%= ENV['KNUGGET_V1_DATABASE_PASSWORD'] %>
